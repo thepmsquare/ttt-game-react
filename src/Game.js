@@ -24,7 +24,7 @@ class Game extends Component {
       { key: "O", iconProps: { iconName: "CircleRing" } },
     ];
     this.state = {
-      mode: "A",
+      mode: "B",
       player1: "X",
       gameStart: false,
       currentPlayer: "",
@@ -70,9 +70,23 @@ class Game extends Component {
         const outcome = this.checkOutcome();
         // neither tie nor win.
         if (outcome === -1) {
-          this.setState(() => {
-            return { board: newBoard, currentPlayer: newCurrentPlayer };
-          });
+          // two player mode
+          if (this.state.mode === "B") {
+            this.setState(() => {
+              return { board: newBoard, currentPlayer: newCurrentPlayer };
+            });
+          }
+          // single player mode
+          else {
+            this.setState(
+              () => {
+                return { board: newBoard };
+              },
+              () => {
+                this.handleComputerTurn();
+              }
+            );
+          }
         } else if (outcome === "win") {
           this.setState(() => {
             return { board: newBoard, outcome: "win" };
@@ -87,6 +101,7 @@ class Game extends Component {
   };
   checkOutcome = () => {
     const { board, currentPlayer } = this.state;
+    //static win positions :( to avoid complex logic.
     const winPositions = [
       ["1-1", "1-2", "1-3"],
       ["2-1", "2-2", "2-3"],
@@ -114,6 +129,48 @@ class Game extends Component {
     }
 
     return -1;
+  };
+  handleGoBack = () => {
+    this.setState(() => {
+      return {
+        mode: "B",
+        player1: "X",
+        gameStart: false,
+        currentPlayer: "",
+        board: [],
+        outcome: "",
+      };
+    });
+  };
+  handleComputerTurn = () => {
+    const computerValue = this.state.player1 === "X" ? "O" : "X";
+    const options = this.state.board.filter((element) => element.value === -1);
+    const randomIndex = Math.floor(Math.random() * options.length);
+    const newBoard = [...this.state.board];
+    const changeThisIndex = newBoard.findIndex(
+      (element) =>
+        element.row === options[randomIndex].row &&
+        element.col === options[randomIndex].col
+    );
+    newBoard[changeThisIndex].value = computerValue;
+    this.setState(() => {
+      return { board: newBoard };
+    });
+  };
+  handlePlayAgain = () => {
+    this.setState(
+      (curState) => {
+        return {
+          mode: curState.mode,
+          player1: curState.player1,
+          currentPlayer: curState.player1,
+          outcome: "",
+        };
+      },
+      () => {
+        this.handleStart();
+      }
+    );
   };
   render = () => {
     return (
@@ -171,6 +228,13 @@ class Game extends Component {
                 );
               })}
             </div>
+            {this.state.outcome && (
+              <DefaultButton
+                text="Play Again?"
+                onClick={this.handlePlayAgain}
+              />
+            )}
+            <DefaultButton text="Go Back" onClick={this.handleGoBack} />
           </div>
         )}
       </div>
