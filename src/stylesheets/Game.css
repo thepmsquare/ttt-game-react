@@ -1,0 +1,23 @@
+.Game {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+.Game-one {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 60%;
+}
+.Game-gridContainer {
+  display: grid;
+  width: 90vmin;
+  height: 90vmin;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+.Game-gridItem {
+  transition: box-shadow 1s ease-in;
+}

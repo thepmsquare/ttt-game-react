@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import "./stylesheets/index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { initializeIcons } from "@uifabric/icons";
+
+initializeIcons();
 
 ReactDOM.render(
   <React.StrictMode>
