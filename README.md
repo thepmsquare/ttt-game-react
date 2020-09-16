@@ -1,4 +1,4 @@
-# ttt-game-react (WIP)
+# ttt-game-react
 
 Tic-tac-toe game made with ReactJS.
 
