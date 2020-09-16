@@ -24,6 +24,7 @@
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+  cursor: pointer;
 }
 .Game-gridItem.win {
   background-color: #69e56e;
