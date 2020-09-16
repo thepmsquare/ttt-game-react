@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ttt-game-react/static/css/main.56d80a55.chunk.css",
-    "main.js": "/ttt-game-react/static/js/main.9867e280.chunk.js",
-    "main.js.map": "/ttt-game-react/static/js/main.9867e280.chunk.js.map",
+    "main.js": "/ttt-game-react/static/js/main.33dead3c.chunk.js",
+    "main.js.map": "/ttt-game-react/static/js/main.33dead3c.chunk.js.map",
     "runtime-main.js": "/ttt-game-react/static/js/runtime-main.8f3afb72.js",
     "runtime-main.js.map": "/ttt-game-react/static/js/runtime-main.8f3afb72.js.map",
     "static/js/2.dd220570.chunk.js": "/ttt-game-react/static/js/2.dd220570.chunk.js",
     "static/js/2.dd220570.chunk.js.map": "/ttt-game-react/static/js/2.dd220570.chunk.js.map",
     "index.html": "/ttt-game-react/index.html",
-    "precache-manifest.9b4a39627c73b445a75299e618e104cb.js": "/ttt-game-react/precache-manifest.9b4a39627c73b445a75299e618e104cb.js",
+    "precache-manifest.513b840ae294197e0c240c96d930c5a1.js": "/ttt-game-react/precache-manifest.513b840ae294197e0c240c96d930c5a1.js",
     "service-worker.js": "/ttt-game-react/service-worker.js",
     "static/css/main.56d80a55.chunk.css.map": "/ttt-game-react/static/css/main.56d80a55.chunk.css.map",
     "static/js/2.dd220570.chunk.js.LICENSE.txt": "/ttt-game-react/static/js/2.dd220570.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.8f3afb72.js",
     "static/js/2.dd220570.chunk.js",
     "static/css/main.56d80a55.chunk.css",
-    "static/js/main.9867e280.chunk.js"
+    "static/js/main.33dead3c.chunk.js"
   ]
 }

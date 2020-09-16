@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ef3a5b0c00b64777dc748d69ac8609a9",
+    "revision": "dd906b5f58fde9a75a9c15952d528f95",
     "url": "/ttt-game-react/index.html"
   },
   {
-    "revision": "62df0e3571cad2aa8224",
+    "revision": "710f52d5ecc0bf60df7a",
     "url": "/ttt-game-react/static/css/main.56d80a55.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ttt-game-react/static/js/2.dd220570.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "62df0e3571cad2aa8224",
-    "url": "/ttt-game-react/static/js/main.9867e280.chunk.js"
+    "revision": "710f52d5ecc0bf60df7a",
+    "url": "/ttt-game-react/static/js/main.33dead3c.chunk.js"
   },
   {
     "revision": "a9145d22bc3e3c5a62a9",
