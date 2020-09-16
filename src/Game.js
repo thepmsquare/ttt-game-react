@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { DefaultButton, getTheme, ChoiceGroup, Text } from "@fluentui/react";
+import {
+  DefaultButton,
+  getTheme,
+  ChoiceGroup,
+  Text,
+  FontIcon,
+} from "@fluentui/react";
 import "./stylesheets/Game.css";
 const theme = getTheme();
 class Game extends Component {
@@ -30,6 +36,7 @@ class Game extends Component {
       currentPlayer: "",
       board: [],
       outcome: "",
+      winPosition: [],
     };
   }
   // to check if bigArray contains all elements of smallerArray.
@@ -40,13 +47,27 @@ class Game extends Component {
     let initialBoard = this.tiles.map((tile) => {
       return { row: tile[0], col: tile[1], value: -1 };
     });
-    this.setState((curState) => {
-      return {
-        gameStart: true,
-        currentPlayer: curState.player1,
-        board: initialBoard,
-      };
-    });
+    this.setState(
+      (curState) => {
+        return {
+          gameStart: true,
+          currentPlayer: curState.player1,
+          board: initialBoard,
+        };
+      },
+      () => {
+        setTimeout(() => {
+          document.querySelectorAll(".Game-gridItem").forEach((item) => {
+            item.style.boxShadow = theme.effects.elevation8;
+          });
+        }, 500);
+        setTimeout(() => {
+          document.querySelectorAll(".Game-hideFirst").forEach((item) => {
+            item.style.opacity = 100;
+          });
+        }, 1000);
+      }
+    );
   };
   handleRadioChange = (event, { key }) => {
     let stateKey = event.target.name;
@@ -56,8 +77,8 @@ class Game extends Component {
   };
   handleTileClick = (e) => {
     if (!this.state.outcome) {
-      const clickedRow = parseInt(e.target.getAttribute("row"));
-      const clickedCol = parseInt(e.target.getAttribute("col"));
+      const clickedRow = parseInt(e.target.getAttribute("data-row"));
+      const clickedCol = parseInt(e.target.getAttribute("data-col"));
       // const clickedPosition = `${clickedRow}-${clickedCol}`;
       const newBoard = [...this.state.board];
       const changeThisIndex = this.state.board.findIndex(
@@ -119,9 +140,17 @@ class Game extends Component {
       (position) => `${position.row}-${position.col}`
     );
     if (
-      winPositions.some((winPosition) =>
-        this.arrayContainsOtherArray(positionsOfCurrentPlayer, winPosition)
-      )
+      winPositions.some((winPosition) => {
+        if (
+          this.arrayContainsOtherArray(positionsOfCurrentPlayer, winPosition)
+        ) {
+          this.addColorToWinPostion(winPosition);
+        }
+        return this.arrayContainsOtherArray(
+          positionsOfCurrentPlayer,
+          winPosition
+        );
+      })
     ) {
       return "win";
     } else if (board.every((element) => element.value !== -1)) {
@@ -139,6 +168,7 @@ class Game extends Component {
         currentPlayer: "",
         board: [],
         outcome: "",
+        winPosition: [],
       };
     });
   };
@@ -165,12 +195,20 @@ class Game extends Component {
           player1: curState.player1,
           currentPlayer: curState.player1,
           outcome: "",
+          winPosition: [],
         };
       },
       () => {
         this.handleStart();
       }
     );
+  };
+  addColorToWinPostion = (winPosition) => {
+    this.setState(() => {
+      return {
+        winPosition,
+      };
+    });
   };
   render = () => {
     return (
@@ -202,7 +240,7 @@ class Game extends Component {
         )}
         {this.state.gameStart && (
           <div className="Game-two">
-            <Text>
+            <Text variant="xLargePlus" className="Game-hideFirst">
               {this.state.outcome === "win"
                 ? `${this.state.currentPlayer} Wins`
                 : this.state.outcome === "tie"
@@ -214,16 +252,28 @@ class Game extends Component {
                 return (
                   <div
                     key={tile.join("-")}
-                    style={{
-                      boxShadow: theme.effects.elevation8,
-                    }}
-                    row={tile[0]}
-                    col={tile[1]}
-                    className="Game-gridItem"
+                    data-row={tile[0]}
+                    data-col={tile[1]}
+                    className={`Game-gridItem ${
+                      this.state.winPosition.includes(tile.join("-")) && "win"
+                    }`}
                     onClick={this.handleTileClick}
                   >
-                    {this.state.board[index].value !== -1 &&
-                      this.state.board[index].value}
+                    {this.state.board[index].value === "X" ? (
+                      <FontIcon
+                        iconName="Cancel"
+                        data-row={tile[0]}
+                        data-col={tile[1]}
+                      />
+                    ) : this.state.board[index].value === "O" ? (
+                      <FontIcon
+                        iconName="CircleRing"
+                        data-row={tile[0]}
+                        data-col={tile[1]}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 );
               })}
@@ -234,7 +284,11 @@ class Game extends Component {
                 onClick={this.handlePlayAgain}
               />
             )}
-            <DefaultButton text="Go Back" onClick={this.handleGoBack} />
+            <DefaultButton
+              text="Go Back"
+              onClick={this.handleGoBack}
+              className="Game-hideFirst"
+            />
           </div>
         )}
       </div>

@@ -19,5 +19,21 @@
   grid-template-rows: repeat(3, 1fr);
 }
 .Game-gridItem {
-  transition: box-shadow 1s ease-in;
+  transition: box-shadow 0.5s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.Game-gridItem.win {
+  background-color: #69e56e;
+}
+.Game-two {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+.Game-hideFirst {
+  opacity: 0;
 }
