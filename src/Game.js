@@ -37,6 +37,7 @@ class Game extends Component {
       board: [],
       outcome: "",
       winPosition: [],
+      winner: "",
     };
   }
   // to check if bigArray contains all elements of smallerArray.
@@ -79,7 +80,6 @@ class Game extends Component {
     if (!this.state.outcome) {
       const clickedRow = parseInt(e.target.getAttribute("data-row"));
       const clickedCol = parseInt(e.target.getAttribute("data-col"));
-      // const clickedPosition = `${clickedRow}-${clickedCol}`;
       const newBoard = [...this.state.board];
       const changeThisIndex = this.state.board.findIndex(
         (element) => element.row === clickedRow && element.col === clickedCol
@@ -109,8 +109,12 @@ class Game extends Component {
             );
           }
         } else if (outcome === "win") {
-          this.setState(() => {
-            return { board: newBoard, outcome: "win" };
+          this.setState((curState) => {
+            return {
+              board: newBoard,
+              outcome: "win",
+              winner: curState.currentPlayer,
+            };
           });
         } else if (outcome === "tie") {
           this.setState(() => {
@@ -120,8 +124,11 @@ class Game extends Component {
       }
     }
   };
-  checkOutcome = () => {
-    const { board, currentPlayer } = this.state;
+  checkOutcome = (computerValue) => {
+    let { board, currentPlayer } = this.state;
+    if (computerValue) {
+      currentPlayer = computerValue;
+    }
     //static win positions :( to avoid complex logic.
     const winPositions = [
       ["1-1", "1-2", "1-3"],
@@ -169,6 +176,7 @@ class Game extends Component {
         board: [],
         outcome: "",
         winPosition: [],
+        winner: "",
       };
     });
   };
@@ -183,9 +191,20 @@ class Game extends Component {
         element.col === options[randomIndex].col
     );
     newBoard[changeThisIndex].value = computerValue;
-    this.setState(() => {
-      return { board: newBoard };
-    });
+    // if computer wins.
+    this.setState(
+      () => {
+        return { board: newBoard };
+      },
+      () => {
+        let outcome = this.checkOutcome(computerValue);
+        if (outcome === "win") {
+          this.setState(() => {
+            return { outcome: "win", winner: "Computer" };
+          });
+        }
+      }
+    );
   };
   handlePlayAgain = () => {
     this.setState(
@@ -196,6 +215,7 @@ class Game extends Component {
           currentPlayer: curState.player1,
           outcome: "",
           winPosition: [],
+          winner: "",
         };
       },
       () => {
@@ -242,7 +262,7 @@ class Game extends Component {
           <div className="Game-two">
             <Text variant="xLargePlus" className="Game-hideFirst">
               {this.state.outcome === "win"
-                ? `${this.state.currentPlayer} Wins`
+                ? `${this.state.winner} Wins`
                 : this.state.outcome === "tie"
                 ? "Tie"
                 : `${this.state.currentPlayer} Turn`}
