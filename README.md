@@ -1,6 +1,7 @@
 # ttt-game-react
 
 Tic-tac-toe game made with ReactJS.
+In single player mode, any random empty tile will be selected to mimic a second player.
 
 ![](ttt-game.gif)
 
